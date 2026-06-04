@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CipherHealth · New Hire Welcome Card</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --anchor: #2D2660;
+    --violet: #5B4FB5;
+    --teal: #00B4A4;
+    --chartreuse: #B5CC2E;
+    --amber: #E8A020;
+    --lavender: #F2F1F9;
+    --teal-tint: #D0F4F1;
+    --chartreuse-tint: #E8F4A8;
+    --amber-tint: #FDEFD0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--lavender);
+    color: var(--anchor);
+    min-height: 100vh;
+  }
+  .app {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    min-height: 100vh;
+  }
+
+  /* ---------- Sidebar ---------- */
+  .sidebar {
+    background: var(--anchor);
+    color: var(--lavender);
+    padding: 32px 28px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+    overflow-y: auto;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .brand .spark { flex-shrink: 0; }
+  .brand h1 {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    color: #fff;
+  }
+  .brand p {
+    font-size: 12px;
+    color: rgba(242,241,249,0.65);
+    margin-top: 2px;
+  }
+  .field label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--chartreuse);
+    margin-bottom: 8px;
+  }
+  .field .hint {
+    font-size: 11px;
+    color: rgba(242,241,249,0.55);
+    margin-top: 6px;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  input[type="text"] {
+    width: 100%;
+    background: rgba(242,241,249,0.08);
+    border: 1px solid rgba(242,241,249,0.22);
+    border-radius: 8px;
+    padding: 11px 13px;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  input[type="text"]::placeholder { color: rgba(242,241,249,0.4); }
+  input[type="text"]:focus {
+    border-color: var(--teal);
+    background: rgba(0,180,164,0.08);
+  }
+
+  /* template picker */
+  .templates {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .tpl {
+    border: 2px solid rgba(242,241,249,0.18);
+    border-radius: 10px;
+    padding: 8px;
+    cursor: pointer;
+    background: rgba(242,241,249,0.04);
+    transition: border-color 0.15s, background 0.15s;
+    text-align: left;
+  }
+  .tpl:hover { border-color: rgba(0,180,164,0.6); }
+  .tpl.active {
+    border-color: var(--chartreuse);
+    background: rgba(181,204,46,0.08);
+  }
+  .tpl .thumb {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 6px;
+    margin-bottom: 7px;
+    position: relative;
+    overflow: hidden;
+  }
+  .tpl .tname {
+    font-size: 11.5px;
+    font-weight: 500;
+    color: var(--lavender);
+  }
+  .thumb.t-dark { background: var(--anchor); }
+  .thumb.t-dark::before {
+    content: ''; position: absolute; top: -14px; right: -14px;
+    width: 40px; height: 40px; border-radius: 50%;
+    background: rgba(0,180,164,0.35);
+  }
+  .thumb.t-dark::after {
+    content: ''; position: absolute; bottom: 12px; left: 50%;
+    transform: translateX(-50%);
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--violet); border: 2px solid var(--teal);
+  }
+  .thumb.t-light { background: var(--lavender); }
+  .thumb.t-light::before {
+    content: ''; position: absolute; bottom: -16px; left: -16px;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(0,180,164,0.22);
+  }
+  .thumb.t-light::after {
+    content: ''; position: absolute; bottom: 12px; left: 12px;
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--violet);
+  }
+  .thumb.t-split { background: linear-gradient(90deg, var(--anchor) 48%, var(--violet) 48%); }
+  .thumb.t-split::after {
+    content: ''; position: absolute; top: 50%; left: 71%;
+    transform: translate(-50%,-50%);
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--lavender);
+  }
+  .thumb.t-orbit { background: var(--lavender); }
+  .thumb.t-orbit::before {
+    content: ''; position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 34px; height: 34px; border-radius: 50%;
+    border: 2px solid rgba(91,79,181,0.5);
+  }
+  .thumb.t-orbit::after {
+    content: ''; position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--anchor);
+  }
+
+  /* photo upload */
+  .drop {
+    border: 1.5px dashed rgba(242,241,249,0.35);
+    border-radius: 10px;
+    padding: 18px 14px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    font-size: 13px;
+    color: rgba(242,241,249,0.75);
+  }
+  .drop:hover, .drop.over {
+    border-color: var(--teal);
+    background: rgba(0,180,164,0.08);
+  }
+  .drop strong { color: var(--teal); font-weight: 600; }
+  .drop .preview-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+  }
+  .drop .preview-row img {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--teal);
+    flex-shrink: 0;
+  }
+  .drop .preview-row .fname {
+    font-size: 12.5px; color: #fff; font-weight: 500;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .drop .preview-row .swap { font-size: 11px; color: rgba(242,241,249,0.6); margin-top: 2px; }
+  .clear-photo {
+    background: none; border: none;
+    color: rgba(242,241,249,0.6);
+    font-size: 16px; cursor: pointer;
+    margin-left: auto; padding: 4px 6px;
+    line-height: 1;
+  }
+  .clear-photo:hover { color: #fff; }
+  #file { display: none; }
+
+  .download {
+    margin-top: auto;
+    background: var(--chartreuse);
+    color: var(--anchor);
+    border: none;
+    border-radius: 10px;
+    padding: 15px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.1s, filter 0.15s;
+  }
+  .download:hover { filter: brightness(1.06); }
+  .download:active { transform: scale(0.985); }
+
+  /* ---------- Preview ---------- */
+  .stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    gap: 16px;
+  }
+  .stage .frame {
+    width: min(640px, 100%, calc(100vh - 140px));
+    aspect-ratio: 1;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(45,38,96,0.18);
+    background: #fff;
+  }
+  canvas { width: 100%; height: 100%; display: block; }
+  .stage .meta {
+    font-size: 12px;
+    color: var(--violet);
+    letter-spacing: 0.3px;
+  }
+
+  @media (max-width: 860px) {
+    .app { grid-template-columns: 1fr; }
+    .sidebar { order: 2; }
+    .stage { order: 1; padding: 24px 16px; }
+    .download { margin-top: 4px; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <svg class="spark" width="26" height="26" viewBox="0 0 24 24"><path d="M12 0 L14 10 L24 12 L14 14 L12 24 L10 14 L0 12 L10 10 Z" fill="#B5CC2E"/></svg>
+      <div>
+        <h1>New hire welcome card</h1>
+        <p>CipherHealth · LinkedIn 1200 × 1200</p>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Template</label>
+      <div class="templates" id="templates">
+        <button class="tpl active" data-tpl="dark"><div class="thumb t-dark"></div><div class="tname">Signature dark</div></button>
+        <button class="tpl" data-tpl="light"><div class="thumb t-light"></div><div class="tname">Lavender light</div></button>
+        <button class="tpl" data-tpl="split"><div class="thumb t-split"></div><div class="tname">Split panel</div></button>
+        <button class="tpl" data-tpl="orbit"><div class="thumb t-orbit"></div><div class="tname">Orbit frame</div></button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="name">Name</label>
+      <input type="text" id="name" placeholder="Jordan Davis" maxlength="60" autocomplete="off">
+    </div>
+
+    <div class="field">
+      <label for="role">Role / title</label>
+      <input type="text" id="role" placeholder="Senior Client Success Manager" maxlength="80" autocomplete="off">
+    </div>
+
+    <div class="field">
+      <label for="dept">Team badge <span style="opacity:0.55;font-weight:400;text-transform:none;letter-spacing:0;">(optional)</span></label>
+      <input type="text" id="dept" placeholder="Client success" maxlength="30" autocomplete="off">
+    </div>
+
+    <div class="field">
+      <label>Photo</label>
+      <div class="drop" id="drop">
+        <span id="dropEmpty">Drag a headshot here or <strong>browse</strong><br><span style="font-size:11px;opacity:0.6;">JPG or PNG · square crop works best</span></span>
+        <div class="preview-row" id="dropFilled" style="display:none;">
+          <img id="thumbImg" alt="Uploaded headshot preview">
+          <div style="min-width:0;">
+            <div class="fname" id="fname"></div>
+            <div class="swap">Click to replace</div>
+          </div>
+          <button class="clear-photo" id="clearPhoto" title="Remove photo" aria-label="Remove photo">&times;</button>
+        </div>
+      </div>
+      <input type="file" id="file" accept="image/*">
+      <div class="hint">No photo yet? The card falls back to styled initials.</div>
+    </div>
+
+    <button class="download" id="download">Download PNG</button>
+  </aside>
+
+  <main class="stage">
+    <div class="frame"><canvas id="card" width="1200" height="1200"></canvas></div>
+    <div class="meta">Live preview · exports at full 1200 × 1200 resolution</div>
+  </main>
+</div>
+
+<script>
+const C = {
+  anchor: '#2D2660',
+  violet: '#5B4FB5',
+  teal: '#00B4A4',
+  chartreuse: '#B5CC2E',
+  amber: '#E8A020',
+  lavender: '#F2F1F9',
+  tealTint: '#D0F4F1',
+  white: '#FFFFFF'
+};
+
+const state = {
+  tpl: 'dark',
+  name: '',
+  role: '',
+  dept: '',
+  img: null
+};
+
+const canvas = document.getElementById('card');
+const ctx = canvas.getContext('2d');
+const S = 1200;
+
+/* ---------- helpers ---------- */
+function initials(name) {
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if (!parts.length) return 'CH';
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
+function fitFont(text, weight, family, maxPx, maxWidth, minPx, italic) {
+  let size = maxPx;
+  while (size > minPx) {
+    ctx.font = (italic ? 'italic ' : '') + weight + ' ' + size + 'px ' + family;
+    if (ctx.measureText(text).width <= maxWidth) break;
+    size -= 2;
+  }
+  return size;
+}
+
+function wrapText(text, maxWidth, font) {
+  ctx.font = font;
+  const words = text.split(/\s+/).filter(Boolean);
+  const lines = [];
+  let line = '';
+  for (const w of words) {
+    const test = line ? line + ' ' + w : w;
+    if (ctx.measureText(test).width > maxWidth && line) {
+      lines.push(line);
+      line = w;
+    } else {
+      line = test;
+    }
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+
+function sparkle(x, y, r, color, ratio) {
+  const inner = r * (ratio || 0.18);
+  ctx.beginPath();
+  ctx.moveTo(x, y - r);
+  ctx.quadraticCurveTo(x + inner * 0.4, y - inner, x + r, y);
+  ctx.quadraticCurveTo(x + inner * 0.4, y + inner, x, y + r);
+  ctx.quadraticCurveTo(x - inner * 0.4, y + inner, x - r, y);
+  ctx.quadraticCurveTo(x - inner * 0.4, y - inner, x, y - r);
+  ctx.closePath();
+  ctx.fillStyle = color;
+  ctx.fill();
+}
+
+function circle(x, y, r, fill, alpha) {
+  ctx.save();
+  if (alpha !== undefined) ctx.globalAlpha = alpha;
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI * 2);
+  ctx.fillStyle = fill;
+  ctx.fill();
+  ctx.restore();
+}
+
+function ring(x, y, r, stroke, width, alpha) {
+  ctx.save();
+  if (alpha !== undefined) ctx.globalAlpha = alpha;
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI * 2);
+  ctx.strokeStyle = stroke;
+  ctx.lineWidth = width;
+  ctx.stroke();
+  ctx.restore();
+}
+
+function roundRectPath(x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+}
+
+function drawCoverImage(img, x, y, w, h) {
+  const ir = img.width / img.height;
+  const r = w / h;
+  let sw, sh, sx, sy;
+  if (ir > r) {
+    sh = img.height;
+    sw = sh * r;
+    sx = (img.width - sw) / 2;
+    sy = 0;
+  } else {
+    sw = img.width;
+    sh = sw / r;
+    sx = 0;
+    sy = (img.height - sh) * 0.25;
+  }
+  ctx.drawImage(img, sx, sy, sw, sh, x, y, w, h);
+}
+
+function photoCircle(cx, cy, r, ringColor, ringW, fallbackBg, fallbackFg) {
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, 0, Math.PI * 2);
+  ctx.clip();
+  if (state.img) {
+    drawCoverImage(state.img, cx - r, cy - r, r * 2, r * 2);
+  } else {
+    ctx.fillStyle = fallbackBg;
+    ctx.fillRect(cx - r, cy - r, r * 2, r * 2);
+    ctx.fillStyle = fallbackFg;
+    ctx.font = '500 ' + Math.round(r * 0.62) + 'px Inter';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(initials(val().name), cx, cy + r * 0.03);
+  }
+  ctx.restore();
+  if (ringW) ring(cx, cy, r + ringW / 2, ringColor, ringW);
+}
+
+function badgePill(text, cx, y, bg, fg) {
+  ctx.font = '500 30px Inter';
+  const w = ctx.measureText(text).width + 76;
+  const h = 64;
+  roundRectPath(cx - w / 2, y, w, h, h / 2);
+  ctx.fillStyle = bg;
+  ctx.fill();
+  ctx.fillStyle = fg;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(text, cx, y + h / 2 + 2);
+}
+
+const PH = { name: 'Jordan Davis', role: 'Senior Client Success Manager' };
+function val() {
+  return {
+    name: state.name.trim() || PH.name,
+    role: state.role.trim() || PH.role,
+    dept: state.dept.trim()
+  };
+}
+
+/* ---------- templates ---------- */
+function tplDark() {
+  const v = val();
+  ctx.fillStyle = C.anchor;
+  ctx.fillRect(0, 0, S, S);
+
+  circle(1180, 30, 220, C.teal, 0.22);
+  circle(1010, 120, 130, C.violet, 0.38);
+  circle(60, 1150, 170, C.violet, 0.25);
+  sparkle(120, 130, 44, C.chartreuse);
+  sparkle(1090, 980, 26, C.teal);
+
+  photoCircle(S / 2, 380, 190, C.teal, 12, C.violet, C.lavender);
+
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'alphabetic';
+
+  ctx.fillStyle = C.chartreuse;
+  ctx.font = '600 38px Inter';
+  const eyebrow = 'W E L C O M E   T O   T H E   T E A M';
+  ctx.fillText(eyebrow, S / 2, 690);
+
+  const nameSize = fitFont(v.name, '600', 'Inter', 96, 1000, 52);
+  ctx.fillStyle = C.white;
+  ctx.font = '600 ' + nameSize + 'px Inter';
+  ctx.fillText(v.name, S / 2, 800);
+
+  const roleSize = fitFont(v.role, '400', 'Inter', 46, 1000, 30);
+  ctx.fillStyle = 'rgba(242,241,249,0.88)';
+  ctx.font = '400 ' + roleSize + 'px Inter';
+  ctx.fillText(v.role, S / 2, 870);
+
+  if (v.dept) badgePill(v.dept, S / 2, 915, C.tealTint, C.anchor);
+
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'alphabetic';
+  ctx.fillStyle = 'rgba(242,241,249,0.6)';
+  ctx.font = 'italic 500 30px Merriweather';
+  ctx.fillText('Every shift. Every unit. Every patient.', S / 2, 1110);
+}
+
+function tplLight() {
+  const v = val();
+  ctx.fillStyle = C.lavender;
+  ctx.fillRect(0, 0, S, S);
+
+  circle(110, 1160, 280, C.teal, 0.16);
+  circle(330, 1130, 180, C.violet, 0.16);
+  circle(190, 1010, 110, C.amber, 0.2);
+  circle(1170, 60, 160, C.violet, 0.12);
+  sparkle(1080, 180, 34, C.teal);
+
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'alphabetic';
+
+  ctx.fillStyle = C.violet;
+  ctx.font = '600 76px Inter';
+  ctx.fillText('Say hello to our', 100, 220);
+  ctx.font = 'italic 600 76px Merriweather';
+  const w1 = ctx.measureText('newest ').width;
+  ctx.fillText('newest', 100, 320);
+  ctx.font = '600 76px Inter';
+  ctx.fillText(' team member', 100 + w1, 320);
+
+  photoCircle(330, 690, 215, C.violet, 10, C.violet, C.lavender);
+
+  const tx = 610;
+  const maxW = S - tx - 80;
+  const nameSize = fitFont(v.name, '600', 'Inter', 80, maxW, 44);
+  ctx.fillStyle = C.anchor;
+  ctx.font = '600 ' + nameSize + 'px Inter';
+  ctx.fillText(v.name, tx, 660);
+
+  ctx.fillStyle = C.violet;
+  const roleFont = '400 42px Inter';
+  const lines = wrapText(v.role, maxW, roleFont);
+  ctx.font = roleFont;
+  lines.slice(0, 2).forEach((ln, i) => ctx.fillText(ln, tx, 725 + i * 56));
+
+  if (v.dept) {
+    ctx.font = '500 30px Inter';
+    const bw = ctx.measureText(v.dept).width + 76;
+    roundRectPath(tx, 790 + (lines.length > 1 ? 56 : 0), bw, 64, 32);
+    ctx.fillStyle = C.tealTint;
+    ctx.fill();
+    ctx.fillStyle = C.anchor;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(v.dept, tx + bw / 2, 790 + (lines.length > 1 ? 56 : 0) + 34);
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'alphabetic';
+  }
+
+  ctx.fillStyle = C.anchor;
+  ctx.font = '500 32px Inter';
+  ctx.fillText('CipherHealth', 100, 1120);
+  ctx.fillStyle = C.violet;
+  ctx.font = 'italic 500 28px Merriweather';
+  ctx.fillText('Every shift. Every unit. Every patient.', 320, 1120);
+}
+
+function tplSplit() {
+  const v = val();
+  const split = 560;
+
+  ctx.fillStyle = C.violet;
+  ctx.fillRect(split, 0, S - split, S);
+  if (state.img) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(split, 0, S - split, S);
+    ctx.clip();
+    drawCoverImage(state.img, split, 0, S - split, S);
+    ctx.restore();
+  } else {
+    circle(880, 540, 230, C.lavender);
+    ctx.fillStyle = C.violet;
+    ctx.font = '500 150px Inter';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(initials(v.name), 880, 552);
+  }
+  ctx.fillStyle = C.teal;
+  ctx.fillRect(split, S - 90, S - split, 90);
+
+  ctx.fillStyle = C.anchor;
+  ctx.fillRect(0, 0, split, S);
+  circle(20, 60, 130, C.violet, 0.35);
+  circle(490, 1130, 150, C.teal, 0.2);
+
+  sparkle(110, 200, 38, C.chartreuse);
+
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'alphabetic';
+  const lx = 80;
+  const maxW = split - lx - 60;
+
+  ctx.fillStyle = C.chartreuse;
+  ctx.font = '600 32px Inter';
+  ctx.fillText('N O W   O N B O A R D', lx, 480);
+
+  const nameFontSize = fitFont(v.name.split(' ')[0] || v.name, '600', 'Inter', 92, maxW, 50);
+  ctx.fillStyle = C.white;
+  ctx.font = '600 ' + nameFontSize + 'px Inter';
+  const nameLines = wrapText(v.name, maxW, ctx.font);
+  nameLines.slice(0, 2).forEach((ln, i) => ctx.fillText(ln, lx, 590 + i * (nameFontSize + 14)));
+  let cy = 590 + (Math.min(nameLines.length, 2) - 1) * (nameFontSize + 14) + 80;
+
+  ctx.fillStyle = 'rgba(242,241,249,0.88)';
+  const roleFont = '400 38px Inter';
+  const roleLines = wrapText(v.role, maxW, roleFont);
+  ctx.font = roleFont;
+  roleLines.slice(0, 3).forEach((ln, i) => ctx.fillText(ln, lx, cy + i * 52));
+  cy += Math.min(roleLines.length, 3) * 52 + 30;
+
+  ctx.fillStyle = C.teal;
+  ctx.fillRect(lx, cy, 110, 10);
+  cy += 80;
+
+  if (v.dept) {
+    ctx.font = '500 28px Inter';
+    const bw = ctx.measureText(v.dept).width + 70;
+    roundRectPath(lx, cy - 40, bw, 60, 30);
+    ctx.fillStyle = 'rgba(181,204,46,0.16)';
+    ctx.fill();
+    ctx.strokeStyle = C.chartreuse;
+    ctx.lineWidth = 2;
+    roundRectPath(lx, cy - 40, bw, 60, 30);
+    ctx.stroke();
+    ctx.fillStyle = C.chartreuse;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(v.dept, lx + bw / 2, cy - 8);
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'alphabetic';
+  }
+
+  ctx.fillStyle = 'rgba(242,241,249,0.65)';
+  ctx.font = '500 26px Inter';
+  ctx.fillText('CipherHealth', lx, 1120);
+}
+
+function tplOrbit() {
+  const v = val();
+  ctx.fillStyle = C.lavender;
+  ctx.fillRect(0, 0, S, S);
+
+  sparkle(1010, 200, 40, C.amber);
+  sparkle(180, 840, 30, C.teal);
+  sparkle(1060, 880, 22, C.violet);
+
+  const cx = S / 2, cy = 430;
+  ring(cx, cy, 320, 'rgba(91,79,181,0.4)', 8);
+  ring(cx, cy, 282, 'rgba(0,180,164,0.5)', 8);
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(cx + 320 * Math.cos(-0.6), cy + 320 * Math.sin(-0.6), 16, 0, Math.PI * 2);
+  ctx.fillStyle = C.amber;
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(cx + 282 * Math.cos(2.4), cy + 282 * Math.sin(2.4), 13, 0, Math.PI * 2);
+  ctx.fillStyle = C.teal;
+  ctx.fill();
+  ctx.restore();
+
+  photoCircle(cx, cy, 235, null, 0, C.anchor, C.lavender);
+
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'alphabetic';
+
+  const nameSize = fitFont(v.name, '600', 'Inter', 88, 1020, 48);
+  ctx.fillStyle = C.anchor;
+  ctx.font = '600 ' + nameSize + 'px Inter';
+  ctx.fillText(v.name, cx, 880);
+
+  const roleSize = fitFont(v.role, '500', 'Merriweather', 44, 1020, 28, true);
+  ctx.fillStyle = C.violet;
+  ctx.font = 'italic 500 ' + roleSize + 'px Merriweather';
+  ctx.fillText(v.role, cx, 950);
+
+  let pillY = 1000;
+  if (v.dept) {
+    badgePill(v.dept, cx, pillY, C.tealTint, C.anchor);
+    pillY += 84;
+  }
+  ctx.font = '500 32px Inter';
+  const t = 'Welcome to CipherHealth';
+  const w = ctx.measureText(t).width + 90;
+  roundRectPath(cx - w / 2, pillY, w, 70, 35);
+  ctx.fillStyle = C.anchor;
+  ctx.fill();
+  ctx.fillStyle = C.chartreuse;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(t, cx, pillY + 37);
+}
+
+const TPLS = { dark: tplDark, light: tplLight, split: tplSplit, orbit: tplOrbit };
+
+function draw() {
+  ctx.clearRect(0, 0, S, S);
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'alphabetic';
+  TPLS[state.tpl]();
+}
+
+/* ---------- wiring ---------- */
+document.getElementById('templates').addEventListener('click', e => {
+  const btn = e.target.closest('.tpl');
+  if (!btn) return;
+  document.querySelectorAll('.tpl').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  state.tpl = btn.dataset.tpl;
+  draw();
+});
+
+['name', 'role', 'dept'].forEach(id => {
+  document.getElementById(id).addEventListener('input', e => {
+    state[id] = e.target.value;
+    draw();
+  });
+});
+
+const drop = document.getElementById('drop');
+const file = document.getElementById('file');
+
+drop.addEventListener('click', e => {
+  if (e.target.id === 'clearPhoto') return;
+  file.click();
+});
+drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('over'); });
+drop.addEventListener('dragleave', () => drop.classList.remove('over'));
+drop.addEventListener('drop', e => {
+  e.preventDefault();
+  drop.classList.remove('over');
+  if (e.dataTransfer.files.length) loadPhoto(e.dataTransfer.files[0]);
+});
+file.addEventListener('change', () => {
+  if (file.files.length) loadPhoto(file.files[0]);
+});
+
+function loadPhoto(f) {
+  if (!f.type.startsWith('image/')) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const img = new Image();
+    img.onload = () => {
+      state.img = img;
+      document.getElementById('thumbImg').src = ev.target.result;
+      document.getElementById('fname').textContent = f.name;
+      document.getElementById('dropEmpty').style.display = 'none';
+      document.getElementById('dropFilled').style.display = 'flex';
+      draw();
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(f);
+}
+
+document.getElementById('clearPhoto').addEventListener('click', e => {
+  e.stopPropagation();
+  state.img = null;
+  file.value = '';
+  document.getElementById('dropEmpty').style.display = '';
+  document.getElementById('dropFilled').style.display = 'none';
+  draw();
+});
+
+document.getElementById('download').addEventListener('click', () => {
+  draw();
+  const a = document.createElement('a');
+  const v = val();
+  const slug = v.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'new-hire';
+  a.download = 'cipherhealth-welcome-' + slug + '.png';
+  a.href = canvas.toDataURL('image/png');
+  a.click();
+});
+
+/* draw once fonts are ready, plus an immediate pass */
+draw();
+if (document.fonts && document.fonts.ready) {
+  Promise.all([
+    document.fonts.load('600 96px Inter'),
+    document.fonts.load('400 46px Inter'),
+    document.fonts.load('italic 500 44px Merriweather')
+  ]).then(draw).catch(draw);
+  document.fonts.ready.then(draw);
+}
+</script>
+</body>
+</html>
